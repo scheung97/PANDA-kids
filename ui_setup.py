@@ -11,7 +11,7 @@ def selection():
 @app.route('/<page_type>/')
 def pages(page_type='hospital'):
     # page_type = hospital, home, or education
-    return 'PAGES {}'.format(page_type)
+    return render_template('base.html', title=page_type)
 
 @app.route('/settings/')
 def settings():
