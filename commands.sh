@@ -6,6 +6,7 @@ function setup_pandakids() {
     apt-get install python3-dev
     pip3 install -U Flask
     pip3 install redislite
+    pip3 install flask-socketio
 }
 
 function run_pandakids() {
