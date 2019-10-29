@@ -12,5 +12,6 @@ function setup_pandakids() {
 function run_pandakids() {
     export FLASK_APP=ui_setup.py
     export FLASK_DEBUG=1
-    python3 -m flask run
+    python3 ui_setup.py #&
+    # python3 channel_logic.py &
 }
