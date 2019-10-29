@@ -37,7 +37,7 @@ class RedisListener(Thread):
 
 # Channel Data Handlers
 def emotion_data_handler(r, data):
-    emotion = data['smth']
+    emotion = data
     if states['emotion'] != emotion:
         r.publish('ui', emotion)
         r.publish('leds', emotion)
