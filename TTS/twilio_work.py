@@ -2,7 +2,7 @@ from twilio.rest import Client
 
 def twilio(text_content):
     account_sid = 'AC9e086a1bb6fe2cc10891a5f544f02c44'
-    auth_token = '22a64710613f78922fa9979313efe373' #don't make this public
+    auth_token = XXXXXXXXXXXXXXX #get twilio key from site
     client = Client(account_sid, auth_token)
 
     #text_content = text_message
