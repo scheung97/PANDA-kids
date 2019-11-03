@@ -10,7 +10,7 @@ sapi5 - SAPI5 on Windows
 nsss - NSSpeechSynthesizer on MAC OS # X
 espeak - all other platforms
 """
-def Speech(*argv): #*argv = multiple inputs (do we need multiple inputs??) 
+def Speech(*argv): #*argv = multiple inputs (do we need multiple inputs??)
     for text in argv:
         engine = tts.init()
 

@@ -13,14 +13,15 @@ import tts
 def audio_input_process_wrapper(input): #speech2text.input):
     try:
         #replace with function objects
-        if (input == 'help'):
-            print("twilio")
-            #tw.twilio_work('Help required')
-        elif(input == 'bored'):
-            print("tts")
-            tts.Speech('Would you like to watch a video?')
-        else:
-            print('neither')
-
+        switch(input){
+            case'help':
+                print("twilio")
+                #tw.twilio_work('Help required')
+            case 'bored':
+                print("tts")
+                tts.Speech('Would you like to watch a video?')
+            default:
+                print('neither')
+            }
     except:
         print('error detected')
