@@ -1,15 +1,17 @@
 from twilio.rest import Client
 
-account_sid = 'AC9e086a1bb6fe2cc10891a5f544f02c44'
-auth_token = '0234b54cd937f124f369c1f99f29e1e5'
-client = Client(account_sid, auth_token)
+def twilio(text_content):
+    account_sid = 'AC9e086a1bb6fe2cc10891a5f544f02c44'
+    auth_token = '22a64710613f78922fa9979313efe373' #don't make this public
+    client = Client(account_sid, auth_token)
 
-text_content = 'Spenser is baby and needs your help'
+    #text_content = text_message
 
-message = client.messages.create(
-                              from_='+17172832424',
-                              to='+19082297439',
-                              body= text_content 
-                          )
+    message = client.messages.create(
+                                  from_='+17172832424',
+                                  to='+18573030125',
+                                  body= text_content
+                              )
 
-print(message.sid)
+    #print(message.sid)
+    print(text_content)

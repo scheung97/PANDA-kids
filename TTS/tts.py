@@ -1,27 +1,42 @@
-#import library
+#import libraries
 import pyttsx3 as tts
 import time
 
 #initialisation
-system = tts.init()
+"""
+Defaults to best available drive.
+Options:
+sapi5 - SAPI5 on Windows
+nsss - NSSpeechSynthesizer on MAC OS # X
+espeak - all other platforms
+"""
+def Speech(output):
+    engine = tts.init()
 
-phrase = input("Enter phrase for Text2Speech: ") #replace with response from speech2text work
 
-"""Voices"""
-voices = system.getProperty('voices')
-system.setProperty('voice', voices[0].id) #male voice
-#system.setProperty('voice', voices[1].id) #female voice
+    #phrase = input("Enter phrase for Text2Speech: ") #replace with response from speech2text work
 
-"""Rate"""
-#rate = system.getProperty('rate')
-#system.setProperty('rate', 60) #speech rate
+    """Voices
 
-"""Volume"""
-#volume = system.getProperty('volume')
-#system.setProperty('volume', 25) #set volume
+    can update age, gender, languages, name
+    """
 
-print(phrase)
-system.say(phrase)
-system.runAndWait()
-time.sleep(2)
-system.stop()
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', voices[0].id) #male voice
+    #engine.setProperty('voice', voices[1].id) #female voice
+
+    """Rate
+
+    """
+    #rate = engine.getProperty('rate')
+    #engine.setProperty('rate', 60) #speech rate
+
+    """Volume"""
+    #volume = engine.getProperty('volume')
+    #engine.setProperty('volume', 25) #volume level
+
+    print(output)
+    engine.say(output)
+    engine.runAndWait()
+    time.sleep(1) #program waits for x-amount of seconds
+    engine.stop()
