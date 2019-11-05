@@ -35,7 +35,7 @@ def handle_ui_change(self, event):
             send(json.dumps({'data': 'data'}), room='ui', namespace='/')
 
 if __name__ == '__main__':
-    r = Redis()
+    r = Redis('/tmp/redis.db')
     client = RedisListener(r, ['ui'], handle_ui_change)
     client.start()
 

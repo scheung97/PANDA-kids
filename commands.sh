@@ -14,5 +14,5 @@ function run_pandakids() {
     export FLASK_DEBUG=1
     python3 channel_logic.py &
     python3 ui_setup.py
-    kill %1
+    killall -9 redis-server
 }

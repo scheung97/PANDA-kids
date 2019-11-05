@@ -68,7 +68,7 @@ def main_event_handler(self, event):
     handlers[event['channel']](self.redis, event['data'])
 
 if __name__ == '__main__':
-    redis_object = Redis()
+    redis_object = Redis('/tmp/redis.db')
     listener = RedisListener(redis_object, channels, main_event_handler)
     time.sleep(5)
     print('Pushing to ui channel')
