@@ -29,6 +29,8 @@ def settings():
 
 def handle_ui_change(self, event):
     if event['data']:
+        print('Received socket data:')
+        print(event['data'])
         with app.app_context():
             send(json.dumps({'data': 'data'}), room='ui', namespace='/')
 

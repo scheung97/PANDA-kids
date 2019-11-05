@@ -1,5 +1,6 @@
 from redislite import Redis
 from threading import Thread
+import time
 
 # globals
 states = {
@@ -33,7 +34,7 @@ class RedisListener(Thread):
 
     def run(self):
         for event in self.pubsub.listen():
-            self.handle_event(event)
+            self.handle_event(self, event)
 
 # Channel Data Handlers
 def emotion_data_handler(r, data):
@@ -67,7 +68,11 @@ def main_event_handler(self, event):
     handlers[event['channel']](self.redis, event['data'])
 
 if __name__ == '__main__':
-    listener = RedisListener(Redis(), [channels], main_event_handler)
+    redis_object = Redis()
+    listener = RedisListener(redis_object, channels, main_event_handler)
+    time.sleep(5)
+    print('Pushing to ui channel')
+    redis_object.publish('ui', 'Test message!')
 
     # emotions & speech to text need pubsub objects
     # ui & text to speech & leds need to subscribe & publish
