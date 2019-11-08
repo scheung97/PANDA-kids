@@ -1,4 +1,5 @@
 import speech_recognition as sr
+import TTS.wrapper as w
 
 
 def get_mic(mic_name):
@@ -23,12 +24,10 @@ def get_mic(mic_name):
     return to_return
 
 
-def get_text(mic_obj, keyword_entries=None):
+def get_text(mic_obj):
     """
-    Recognize the phrase said into the mic
-    :param mic_obj: The microphone object we're using as the input audio feed
-    :param keyword_entries: The entries we're using to get phrases from.
-                            Set to None by default, so that it pulls from all English words.
+    Recognize the phrase said into the mic using a Google Speech API
+    :param mic_obj: The microphone object we're using as the input audio fee
     :return: The phrase the user said.
     """
     recog = sr.Recognizer()
@@ -37,31 +36,21 @@ def get_text(mic_obj, keyword_entries=None):
         print("Say something")
         data = recog.listen(mic, phrase_time_limit=1.5)
     print("Got mic phrase")
-    text = recog.recognize_sphinx(data, keyword_entries=keyword_entries)
+    text = recog.recognize_google(data)
     print(text)
     return text
 
 
 def main():
     # Microphone we're using
+    # **Replace this with the name of your mic (trimmed if needed)**
     mic_name = "Microphone (Realtek High Defini"
 
-    # Set up the phrases we're using if desired
-    # Commented out because it was creating weird results before.
-    """
-    phrases = ["yes", "no", "help", "happy", "sad", "video"]
-    sensitivity = 0
-    keyword_entries = []
-    for phrase in phrases:
-        keyword_entries.append((phrase, sensitivity))
-    print(keyword_entries)
-    """
-    keyword_entries = None
     # Run the process
     mic_ind = get_mic(mic_name)
     mic_obj = sr.Microphone(device_index=mic_ind)
-    text = get_text(mic_obj, keyword_entries)
-    print("Given response: " + text)
+    text = get_text(mic_obj)
+    w.audio_input_process_wrapper(text)
     return
 
 main()
