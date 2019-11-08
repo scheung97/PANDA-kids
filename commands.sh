@@ -6,6 +6,7 @@ function setup_pandakids() {
     apt-get install python3-dev
     pip3 install -U Flask
     pip3 install redislite
+    pip3 install flask-socketio
     pip3 install PyAudio
     pip3 install pocketsphinx
     pip3 install SpeechRecognition
@@ -14,5 +15,7 @@ function setup_pandakids() {
 function run_pandakids() {
     export FLASK_APP=ui_setup.py
     export FLASK_DEBUG=1
-    python3 -m flask run
+    python3 channel_logic.py &
+    python3 ui_setup.py
+    killall -9 redis-server
 }
