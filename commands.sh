@@ -7,6 +7,9 @@ function setup_pandakids() {
     pip3 install -U Flask
     pip3 install redislite
     pip3 install flask-socketio
+    pip3 install PyAudio
+    pip3 install pocketsphinx
+    pip3 install SpeechRecognition
 }
 
 function run_pandakids() {
