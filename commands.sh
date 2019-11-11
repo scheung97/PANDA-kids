@@ -28,6 +28,8 @@ function run_pandakids() {
     sleep 2
     python3 speech_recog/recognition.py &
     sleep 2
+    python3 emotion_detection/webcam_recognition.py &
+    sleep 2
     python3 ui/ui_setup.py
     killall -9 redis-server
 }
