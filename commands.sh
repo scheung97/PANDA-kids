@@ -26,7 +26,7 @@ function run_pandakids() {
     export FLASK_DEBUG=1
     python3 logic/channel_logic.py &
     sleep 2
-    python3 speech_recognition/recognition.py &
+    python3 speech_recog/recognition.py &
     sleep 2
     python3 ui/ui_setup.py
     killall -9 redis-server
