@@ -1,30 +1,38 @@
 """python facial recognition"""
 import numpy
 import cv2
+from PIL import Image
 
 """opens up laptop webcam"""
-cv2.namedWindow("preview")
+frontface_path = "haarcascade_frontalface_default.xml"
+faceCascade = cv2.CascadeClassifier(frontface_path) #insert path here
 vc = cv2.VideoCapture(0)
-#vc = cv2.VideoCapture(0, cv2.CAP_DSHOW)#eliminate async callback warming?
 
-#define output file:
-out = 'testoutput.jpg'
-if vc.isOpened(): # try to get the first frame
+while True:
     rval, frame = vc.read()
-else:
-    rval = False
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-while rval:
-    cv2.imshow("preview", frame)
-    rval, frame = vc.read()
+    faces = faceCascade.detectMultiScale(gray,
+    scaleFactor=1.2, minNeighbors = 2  #, flags= cv2.cv.CV_HAAR_SCALE_IMAGE
+    )
+
+    for (x,y,w,h) in faces:
+        circle_cord_x = int(x+ (w/2))
+        circle_cord_y = int(y+ (h/2))
+
+        #creates box aroundface
+        box = cv2.rectangle(frame, (x,y), (x+w, y+h), (0,255,0),2)
+
+        #creates circle in center of box
+        circle = cv2.circle(frame, (circle_cord_x,circle_cord_y),2,(255,0,0),1)
+
+
+    #outputs video w/ box around detected face
+    cv2.imshow('Output', frame)
 
     key = cv2.waitKey(10)
-    if key == ord('c'):
-        cv2.imwrite(out, frame)
-        print("image captured")
-    elif key == 27:
+    if key == 27: #esc key closes window
         break
-
 vc.release()
 cv2.destroyAllWindows()
 """-----"""
