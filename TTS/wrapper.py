@@ -1,6 +1,10 @@
 """Pseudocode for handling things"""
-import TTS.twilio_work as tw
-import TTS.tts as tts
+#import TTS.twilio_work as tw
+import twilio_work as tw
+
+#import TTS.tts as tts
+import tts as tts
+
 
 """
 @param speech2text.input   result of speech2text process
@@ -14,11 +18,11 @@ def audio_input_process_wrapper(input): #speech2text.input):
         #replace with function objects
         if input.__contains__('help'):
             print("twilio")
-            # tw.twilio_work('Help required')
+            tw.twilio('Help required')
         elif input.__contains__('bored'):
             print("tts")
             tts.Speech('Would you like to watch a video?')
         else:
             print('neither')
-    except:
-        print('error detected')
+    except Exception as v:
+        print('error detected: ' + str(v))
