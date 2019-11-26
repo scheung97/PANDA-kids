@@ -25,7 +25,9 @@ def Speech(*argv): #*argv = multiple inputs (do we need multiple inputs??)
         """
 
         voices = engine.getProperty('voices')
-        engine.setProperty('voice', voices[0].id) #male voice
+        for voice in voices:
+            print("Voice name: {}, voice id: {}, voice language: {}".format(voice.name, voice.id, voice.languages))
+        engine.setProperty('voice', list(filter(lambda v: v.id == 'english-us', voices))[0].id) #male voice
         #engine.setProperty('voice', voices[1].id) #female voice
 
         """Rate
@@ -33,7 +35,7 @@ def Speech(*argv): #*argv = multiple inputs (do we need multiple inputs??)
         speech rate
         """
         #rate = engine.getProperty('rate')
-        #engine.setProperty('rate', 60) #speech rate
+        engine.setProperty('rate', 150) #speech rate
 
         """Volume
 
@@ -43,7 +45,7 @@ def Speech(*argv): #*argv = multiple inputs (do we need multiple inputs??)
         #engine.setProperty('volume', 25) #volume level
 
         print(text) #for error checking
-        engine.say(text)
+        engine.say(". . . . ." + text)
         engine.runAndWait()
 
     time.sleep(1) #program waits for x-amount of seconds

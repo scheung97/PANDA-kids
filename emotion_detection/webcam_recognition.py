@@ -23,6 +23,10 @@ video = cv2.VideoCapture(0)
 frontface_path = "emotion_detection/haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(frontface_path)
 
+show_video = False
+if (sys.argv.length > 1 and sys.argv[1].lower() == 'true'):
+    show_video = True
+
 r = Redis(REDIS_DB_FILE)
 
 while True:
@@ -63,6 +67,7 @@ while True:
                 continue
 
             #Resizing into 224x224 because we trained the model with this image size.
+            # TODO: Consider excluding based on previous cropping?
             im = im.resize((IMAGE_SIZE,IMAGE_SIZE))
             img_array = np.array(im) / 255
             img_array = np.expand_dims(img_array, axis=0)
@@ -71,13 +76,14 @@ while True:
             prediction = np.argmax(pred_array[0])
             face_predictions.append(EXPRESSIONS[prediction])
 
-            frame = cv2.putText(frame, EXPRESSIONS[prediction], (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-
-            frame = cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            if show_video:
+                frame = cv2.putText(frame, EXPRESSIONS[prediction], (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+                frame = cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
         for p in face_predictions:
             r.publish(UI_CHANNEL, EXPRESSIONS[p])
-        cv2.imshow("Capturing", frame)
+        if show_video:
+            cv2.imshow("Capturing", frame)
         key=cv2.waitKey(1)
         if key == ord('q'):
                 break
