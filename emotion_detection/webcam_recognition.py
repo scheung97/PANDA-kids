@@ -75,7 +75,8 @@ while True:
 
             frame = cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-        r.publish(UI_CHANNEL, EXPRESSIONS[prediction])
+        for p in face_predictions:
+            r.publish(UI_CHANNEL, EXPRESSIONS[p])
         cv2.imshow("Capturing", frame)
         key=cv2.waitKey(1)
         if key == ord('q'):
