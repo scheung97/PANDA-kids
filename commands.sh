@@ -8,6 +8,9 @@ function setup_pandakids() {
     if [ "$non_python_install" == "true" ]; then
         sudo apt-get install python3-dev
         sudo apt-get install espeak
+	sudo apt-get install libpulse-dev
+	sudo apt-get install portaudio19-dev
+	sudo apt-get install swig
     fi
     pip3 install -U Flask
     pip3 install redislite
@@ -24,6 +27,7 @@ function setup_pandakids() {
 function run_pandakids() {
     export FLASK_APP=ui_setup.py
     export FLASK_DEBUG=1
+    export PYTHONPATH=`pwd`:$PYTHONPATH
     python3 logic/channel_logic.py &
     sleep 2
     python3 speech_recog/recognition.py &
