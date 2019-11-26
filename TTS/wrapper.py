@@ -1,9 +1,6 @@
 """Pseudocode for handling things"""
-#import TTS.twilio_work as tw
-import twilio_work as tw
-
-#import TTS.tts as tts
-import tts as tts
+import TTS.twilio_work as tw
+import TTS.tts as tts
 
 
 """
