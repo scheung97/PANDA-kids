@@ -12,7 +12,10 @@ espeak - all other platforms
 """
 def Speech(*argv): #*argv = multiple inputs (do we need multiple inputs??)
     for text in argv:
-        engine = tts.init()
+        #engine = tts.init() #defaults to best available driver for platform
+        #engine = tts.init(driverName: sapi5) #for SAPI5 on Windows
+        #engine = tts.init(driverName: nsss) #for NSSpeechSynthesizer on MAC OSX
+        engine = tts.init(driverName: espeak) #for eSpeak other platforms besides windows and macOS
 
         #phrase = input("Enter phrase for Text2Speech: ") #replace with response from speech2text work
 
