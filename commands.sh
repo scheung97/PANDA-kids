@@ -35,5 +35,7 @@ function run_pandakids() {
     python3 emotion_detection/webcam_recognition.py &
     sleep 2
     python3 ui/ui_setup.py
-    killall -9 redis-server
+    kill %1 %2 %3
+    sleep 1
+    jobs
 }

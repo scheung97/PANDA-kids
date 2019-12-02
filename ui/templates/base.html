@@ -37,7 +37,7 @@
                     <a class="btn btn-primary" href="/education/">Education</a>
                 {% else %}
                     <div class="text-center">
-                        <iframe width="640" height="360" src="https://www.youtube.com/embed/FX20kcp7j5c?controls=0&autoplay=1"
+                        <iframe id="videoFrame" width="640" height="360" src=""
                             frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 {% endif %}
@@ -48,13 +48,28 @@
         <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
         <script type="text/javascript" charset="utf-8">
-            var socket = io.connect('/ui');
-            console.log("Socket object: " + socket)
-            socket.on('connect', () => {
-                console.log("Connected. ID: " + socket.id);
-            });
-            socket.on('ui', function(data) {
-                console.log('Received data from server: ' + JSON.stringify(data));
+            $(document).ready(function() {
+                var possible_urls = [
+                    "https://www.youtube.com/embed/FX20kcp7j5c?controls=0&autoplay=1",
+                    "https://www.youtube.com/embed/n9-LH3rgp5Y?controls=0&autoplay=1",
+                    "https://www.youtube.com/embed/Vb2ZXRh74WU?controls=0&autoplay=1",
+                    "https://www.youtube.com/embed/xhN5Zkm82DA?controls=0&autoplay=1",
+                    "https://www.youtube.com/embed/bLJw9yPusak?controls=0&autoplay=1"
+                ];
+                var current_video_index = -1;
+                var videoFrame = $('#videoFrame');
+                var socket = io.connect('/ui');
+                console.log("Socket object: " + socket)
+                socket.on('connect', () => {
+                    console.log("Connected. ID: " + socket.id);
+                });
+                socket.on('ui', function(data) {
+                    console.log('Received data from server: ' + JSON.stringify(data));
+                    if (data['data'] == 'ChangeVideo') {
+                        current_video_index = (current_video_index + 1) % possible_urls.length;
+                        videoFrame.attr('src', possible_urls[current_video_index]);
+                    }
+                });
             });
         </script>
     </body>

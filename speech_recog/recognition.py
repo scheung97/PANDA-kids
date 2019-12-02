@@ -3,3 +3,5 @@ from constants import *
 
 if __name__ == '__main__':
 	r = Redis(REDIS_DB_FILE)
+	while True:
+		pass

@@ -25,7 +25,8 @@ def speech_data_handler(r, data):
     data
 
 def ui_data_handler(r, data):
-    print("UI data handler received: {}".format(data), flush=True)
+    pass
+    #print("UI data handler received: {}".format(data), flush=True)
 
 def tts_data_handler(r, data):
     if not isinstance(data, int):
@@ -46,7 +47,7 @@ channels = list(handlers.keys())
 
 # Main Listener Event Handler
 def main_event_handler(self, event):
-    print("Logic main event handler called")
+    #print("Logic main event handler called")
     handlers[event['channel']](self.redis, event['data'])
 
 if __name__ == '__main__':
@@ -54,15 +55,8 @@ if __name__ == '__main__':
     redis_object = Redis(REDIS_DB_FILE)
     listener = RedisListener('Logic Listener', redis_object, channels, main_event_handler)
     listener.start()
-    time.sleep(10)
-    print('Pushing to ui channel')
-    redis_object.publish(UI_CHANNEL, 'Test message!')
-    time.sleep(5)
-    print('Pushing to TTS channel')
-    redis_object.publish(TTS_CHANNEL, 'Test speech message')
-    time.sleep(10)
-    print('Pushing to ui channel again')
-    redis_object.publish(UI_CHANNEL, 'Another test message!')
+    while True:
+        pass
 
     # emotions & speech to text need pubsub objects
     # ui & text to speech & leds need to subscribe & publish

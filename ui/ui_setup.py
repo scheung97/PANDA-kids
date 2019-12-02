@@ -19,11 +19,12 @@ socketio = SocketIO(app)
 r = Redis(REDIS_DB_FILE)
 
 def handle_ui_change(self, event):
-    print(event)
+    #print(event)
     if event['data']:
         print('Received socket data:')
         print(event['data'])
-        socketio.emit('ui', {'data': event['data'].decode('utf-8')}, namespace='/ui')
+        if event['data'] == b'ChangeVideo':
+            socketio.emit('ui', {'data': 'ChangeVideo'}, namespace='/ui')
 
 @app.route('/')
 def selection():
@@ -38,6 +39,11 @@ def selection():
 
 @app.route('/<page_type>/')
 def pages(page_type='hospital'):
+    global listener_thread
+    if listener_thread == None:
+        listener_thread = RedisListener('UI Listener', r, [UI_CHANNEL], handle_ui_change)
+        listener_thread.start()
+        print("Started listener thread")
     # page_type = hospital, home, or education
     return render_template('base.html', title=page_type)
 
