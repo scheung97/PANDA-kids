@@ -1,5 +1,6 @@
 import speech_recognition as sr
 import TTS.wrapper as w
+from redislite import Redis
 
 
 def get_mic(mic_name):
@@ -44,6 +45,7 @@ def get_text(mic_obj):
 def main():
     # Microphone we're using
     # **Replace this with the name of your mic (trimmed if needed)**
+    r = Redis(REDIS_DB_FILE)
     mic_name = "Microphone (Realtek High Defini"
 
     # Run the process
@@ -51,6 +53,7 @@ def main():
     mic_obj = sr.Microphone(device_index=mic_ind)
     text = get_text(mic_obj)
     w.audio_input_process_wrapper(text)
+    r.publish(UI_CHANNEL, 'ChangeVideo')
     return
 
 main()
